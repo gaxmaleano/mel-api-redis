@@ -1,18 +1,30 @@
-apiVersion: build.openshift.io/v1
-kind: BuildConfig
+kind: Deployment
+apiVersion: apps/v1
 metadata:
-  name: flask-api-build
+  name: my-python
 spec:
-  source:
-    type: Git
-    git:
-      uri: https://github.com/gaxmaleano/mel-api-redis.git
-    contextDir: "/"
-  strategy:
-    type: Docker
-    dockerStrategy:
-      dockerfilePath: Dockerfile
-  output:
-    to:
-      kind: ImageStreamTag
-      name: flask-api:latest
+  replicas: 1
+  selector:
+    matchLabels:
+      app: python-app
+  template:
+    metadata:
+      labels:
+        app: python-app
+    spec:
+      containers:
+        - name: my-python
+          image: python-image:latest
+          ports:
+            - containerPort: 8081
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: my-python
+spec:
+  ports:
+    - port: 8081
+      targetPort: 8081
+  selector:
+    app: python-app
