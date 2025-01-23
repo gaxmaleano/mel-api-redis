@@ -32,6 +32,10 @@ components:
           targetPort: 8081
           path: /
           secure: true
+        - name: redis
+          targetPort: 6379
+          path: /
+          secure: false
 commands:
   - id: build-image
     apply:

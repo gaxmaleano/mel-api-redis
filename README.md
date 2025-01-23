@@ -11,7 +11,7 @@ pip install -r requirements.txt
 
 ## Usage
 
-To start the Flask application, run:
+To start the Flask application with Redis, run:
 ```
-python app.py
+docker-compose up
 ```
